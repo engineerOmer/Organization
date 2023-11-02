@@ -1,14 +1,17 @@
 package engineeromer.com.organization.controller;
 
-import engineeromer.com.organization.dto.SaveUserRequestDto;
-import engineeromer.com.organization.dto.UserResponseDto;
-import engineeromer.com.organization.dto.UserStatusInformationDto;
-import engineeromer.com.organization.dto.UserUpdateRequestDto;
+import engineeromer.com.organization.dto.request.SaveUserRequestDto;
+import engineeromer.com.organization.dto.response.OrganizationResponseDto;
+import engineeromer.com.organization.dto.response.UserResponseDto;
+import engineeromer.com.organization.dto.response.UserStatusInformationDto;
+import engineeromer.com.organization.dto.request.UserUpdateRequestDto;
 import engineeromer.com.organization.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +24,6 @@ public class UserController {
     public ResponseEntity<UserResponseDto> saveCampaign(@RequestBody SaveUserRequestDto saveUserRequestDto){
         return new ResponseEntity<>(userService.saveUser(saveUserRequestDto), HttpStatus.CREATED);
     }
-
 
     @GetMapping("/getStatus")
     public ResponseEntity<UserStatusInformationDto> getUserByStatus(Integer id){
@@ -47,6 +49,11 @@ public class UserController {
     @DeleteMapping("/deleteUser")
     public ResponseEntity<String>  deleteUser(@RequestParam Integer id){
         return new ResponseEntity<>(userService.deleteUser(id),HttpStatus.OK);
+    }
+
+    @GetMapping("/usersOrganizations")
+    public ResponseEntity<List<OrganizationResponseDto>> getAllOrganizationsByUser(@RequestParam Long userId){
+        return new ResponseEntity<>(userService.getAllOrganizationsByUser(userId),HttpStatus.OK);
     }
 
 

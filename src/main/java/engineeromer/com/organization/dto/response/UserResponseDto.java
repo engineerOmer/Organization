@@ -1,12 +1,13 @@
-package engineeromer.com.organization.dto;
+package engineeromer.com.organization.dto.response;
 
 import engineeromer.com.organization.model.Status;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-@Data
+
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class SaveUserRequestDto {
+public class UserResponseDto {
 
     private String fullName;
 
@@ -15,5 +16,4 @@ public class SaveUserRequestDto {
     private String email;
 
     private Status status;
-
 }

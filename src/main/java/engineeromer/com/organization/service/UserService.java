@@ -1,15 +1,18 @@
 package engineeromer.com.organization.service;
 
-import engineeromer.com.organization.dto.SaveUserRequestDto;
-import engineeromer.com.organization.dto.UserResponseDto;
-import engineeromer.com.organization.dto.UserStatusInformationDto;
-import engineeromer.com.organization.dto.UserUpdateRequestDto;
+import engineeromer.com.organization.dto.request.SaveUserRequestDto;
+import engineeromer.com.organization.dto.response.OrganizationResponseDto;
+import engineeromer.com.organization.dto.response.UserResponseDto;
+import engineeromer.com.organization.dto.response.UserStatusInformationDto;
+import engineeromer.com.organization.dto.request.UserUpdateRequestDto;
 import engineeromer.com.organization.model.Status;
 import engineeromer.com.organization.model.User;
 import engineeromer.com.organization.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 @RequiredArgsConstructor
@@ -36,7 +39,7 @@ public class UserService {
     }
 
     public UserResponseDto getUserByNickName(String nickName){
-        User user = userRepository.findByEmail(nickName);
+        User user = userRepository.findByNickName(nickName);
         return modelMapper.map(user,UserResponseDto.class);
     }
 
@@ -49,8 +52,13 @@ public class UserService {
     }
 
     public String deleteUser(int id) {
-        userRepository.findById(id).orElseThrow();
         userRepository.deleteById(id);
-        return "kullanici silindi";
+        String message  = "%s Id'li kullanıcı silindi!";
+        return String.format(message,id);
+    }
+
+    public List<OrganizationResponseDto> getAllOrganizationsByUser(Long userId) {
+        return userRepository.findAllOrganizationsByUser(userId).stream()
+                .map(organization -> modelMapper.map(organization, OrganizationResponseDto.class)).toList();
     }
 }

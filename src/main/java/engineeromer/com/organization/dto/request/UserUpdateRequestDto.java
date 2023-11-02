@@ -1,4 +1,4 @@
-package engineeromer.com.organization.dto;
+package engineeromer.com.organization.dto.request;
 
 import engineeromer.com.organization.model.Status;
 import lombok.*;
